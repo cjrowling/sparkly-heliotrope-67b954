@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<meta name="theme-color" content="#0b1220" />
+<title>Palace Cards</title>
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Palace Cards" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header id="app-header">
+  <div class="eyebrow" id="header-eyebrow">Crystal Palace FC</div>
+  <h1 id="header-title">Palace Cards</h1>
+</header>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="screen-home">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-value mono" id="stat-owned">0</div>
+        <div class="stat-label">Cards owned</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value mono" id="stat-wishlist">0</div>
+        <div class="stat-label">On wishlist</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value mono" id="stat-value">£0</div>
+        <div class="stat-label">Est. collection value</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value mono" id="stat-hits">0</div>
+        <div class="stat-label">Autos / relics / numbered</div>
+      </div>
+    </div>
+
+    <div class="section-title">Recently added <a href="#" data-tab="collection">View all</a></div>
+    <div id="home-recent"></div>
+  </section>
+
+  <!-- ============ COLLECTION ============ -->
+  <section class="screen" id="screen-collection">
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="collection-search" placeholder="Search your collection…" />
+    </div>
+    <div class="chip-row" id="collection-filters"></div>
+    <div id="collection-list"></div>
+  </section>
+
+  <!-- ============ WISHLIST ============ -->
+  <section class="screen" id="screen-wishlist">
+    <div class="section-title">Saved searches <button class="link" id="btn-new-saved-search">+ New</button></div>
+    <div id="saved-searches-list"></div>
+
+    <div class="section-title" style="margin-top:24px">Wanted cards</div>
+    <div class="chip-row" id="wishlist-filters"></div>
+    <div id="wishlist-list"></div>
+  </section>
+
+  <!-- ============ SCOUT ============ -->
+  <section class="screen" id="screen-discover">
+
+    <div class="section-title" style="margin-top:0">Marketplaces</div>
+    <div class="method-group">
+      <button class="method-tile" data-scout-action="search-ebay">
+        <div class="method-icon">🛒</div>
+        <div class="method-body">
+          <div class="method-title">eBay</div>
+          <div class="method-sub">Live listings via eBay's search API, newest first</div>
+        </div>
+        <span class="status-badge status-active">Active</span>
+      </button>
+      <button class="method-tile" data-scout-action="search-vinted">
+        <div class="method-icon">👕</div>
+        <div class="method-body">
+          <div class="method-title">Vinted</div>
+          <div class="method-sub">Pre-filled search link (no public API available)</div>
+        </div>
+        <span class="status-badge status-active">Active</span>
+      </button>
+      <div class="method-tile is-static">
+        <div class="method-icon">🏷️</div>
+        <div class="method-body">
+          <div class="method-title">Other marketplaces</div>
+          <div class="method-sub">Depop is linked from search results now; more added as they prove useful</div>
+        </div>
+        <span class="status-badge status-soon">Partial</span>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:22px">Card databases &amp; reference</div>
+    <div class="method-group">
+      <a class="method-tile" href="https://www.fanter.co.uk" target="_blank" rel="noopener">
+        <div class="method-icon">📚</div>
+        <div class="method-body">
+          <div class="method-title">Fanter</div>
+          <div class="method-sub">Checklists by season/product ↗ — helps find cards that aren't for sale anywhere right now</div>
+        </div>
+        <span class="status-badge status-soon">Reference link</span>
+      </a>
+      <div class="method-tile is-static">
+        <div class="method-icon">🗄️</div>
+        <div class="method-body">
+          <div class="method-title">More reference sources</div>
+          <div class="method-sub">Manufacturer checklists and other legitimate databases, as we find reliable ones</div>
+        </div>
+        <span class="status-badge status-soon">Coming soon</span>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:22px">Discovery &amp; search</div>
+    <div class="method-group">
+      <button class="method-tile" data-scout-action="search-player">
+        <div class="method-icon">🔎</div>
+        <div class="method-body">
+          <div class="method-title">Search for a player/card</div>
+          <div class="method-sub">Free-text search, e.g. "Wharton gold" or "Palace Conference League relic"</div>
+        </div>
+        <span class="status-badge status-active">Active</span>
+      </button>
+      <button class="method-tile" data-scout-action="scan">
+        <div class="method-icon">📷</div>
+        <div class="method-body">
+          <div class="method-title">Scan a card</div>
+          <div class="method-sub">Identify a card you've already found</div>
+        </div>
+        <span class="status-badge status-active">Active</span>
+      </button>
+    </div>
+
+    <div class="section-title" style="margin-top:22px">Discovery intelligence <span class="status-badge status-soon">Scout Brain</span></div>
+    <div class="note-box">
+      Scout's most important future capability. It will read the metadata on your wishlist and collection — player, manufacturer, set/release, season, card type, parallel, numbering, autograph/relic — to actively surface Palace cards you don't know exist yet. e.g. <em>"You wishlisted a Wharton Chrome Auto — we found 3 other Palace autos from that release, and 6 other rare Palace cards from it you don't own."</em>
+    </div>
+    <div class="method-group">
+      <div class="method-tile is-static">
+        <div class="method-icon">🧬</div>
+        <div class="method-body">
+          <div class="method-title">Find Similar</div>
+          <div class="method-sub">Open any wishlist card and tap "Find Similar" — the tier structure is ready, matching isn't built yet</div>
+        </div>
+        <span class="status-badge status-soon">Structure ready</span>
+      </div>
+      <div class="method-tile is-static">
+        <div class="method-icon">🔗</div>
+        <div class="method-body">
+          <div class="method-title">Related / recommended cards</div>
+          <div class="method-sub">Passive suggestions based on your whole collection and wishlist, not just one card</div>
+        </div>
+        <span class="status-badge status-soon">Coming soon</span>
+      </div>
+      <div class="method-tile is-static">
+        <div class="method-icon">🧠</div>
+        <div class="method-body">
+          <div class="method-title">Scout Brain summaries</div>
+          <div class="method-sub">e.g. "You own 2 Conference League cards — 6 more Palace ones exist that you don't have"</div>
+        </div>
+        <span class="status-badge status-soon">Coming soon</span>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:22px">Search</div>
+    <div class="chip-row" id="discover-mode-toggle">
+      <button class="chip active" data-mode="search">🔎 Search marketplaces</button>
+      <button class="chip" data-mode="scan">📷 Scan a card</button>
+    </div>
+
+    <!-- ---- SEARCH MODE ---- -->
+    <div id="discover-search-mode">
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" id="ebay-search-input" placeholder='e.g. "Wilfried Zaha auto" or "Wharton gold"' />
+      </div>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn btn-primary btn-block" id="btn-run-search">Search eBay</button>
+        <button class="btn btn-secondary" id="btn-save-search" title="Save this search">☆ Save</button>
+      </div>
+
+      <div id="search-loading" style="display:none">
+        <div class="spinner"></div>
+        <div style="text-align:center;color:var(--text-dim);font-size:13px">Searching eBay…</div>
+      </div>
+      <div id="search-error" style="display:none"></div>
+      <div id="search-other-links" style="display:none"></div>
+      <div id="search-results"></div>
+    </div>
+
+    <!-- ---- SCAN MODE ---- -->
+    <div id="discover-scan-mode" style="display:none">
+      <div id="discover-idle">
+        <label class="scan-drop" for="scan-file-input">
+          <div class="scan-icon">📷</div>
+          <strong style="color:var(--text)">Upload a photo or screenshot</strong>
+          <div style="margin-top:6px;font-size:12.5px;">Front of the card, listing screenshot, or both. Clearer photos identify better.</div>
+        </label>
+        <input type="file" id="scan-file-input" accept="image/*" style="display:none" />
+
+        <div class="field">
+          <label>Listing title / description (optional, helps a lot)</label>
+          <textarea id="scan-listing-text" placeholder="Paste the eBay/Vinted title or description here…"></textarea>
+        </div>
+      </div>
+
+      <div id="discover-preview" style="display:none">
+        <img id="scan-preview-img" class="scan-preview" />
+        <button class="btn btn-secondary btn-block" id="btn-rescan-photo">Choose a different photo</button>
+      </div>
+
+      <div id="discover-analyze-row" style="display:none">
+        <button class="btn btn-primary btn-block" id="btn-analyze">✨ Identify this card</button>
+      </div>
+
+      <div id="discover-loading" style="display:none">
+        <div class="spinner"></div>
+        <div style="text-align:center;color:var(--text-dim);font-size:13px">Reading the card…</div>
+      </div>
+
+      <div id="discover-error" style="display:none"></div>
+
+      <div id="discover-result" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- ============ PLAYERS ============ -->
+  <section class="screen" id="screen-players">
+    <div id="players-list"></div>
+  </section>
+
+  <!-- ============ SETS ============ -->
+  <section class="screen" id="screen-sets">
+    <div id="sets-list"></div>
+  </section>
+
+  <!-- ============ MORE ============ -->
+  <section class="screen" id="screen-more">
+    <div class="summary-tile" data-tab="players">
+      <div><div class="s-name">Players</div><div class="s-sub">Progress by player</div></div>
+      <div class="card-chevron">›</div>
+    </div>
+    <div class="summary-tile" data-tab="sets">
+      <div><div class="s-name">Products / Sets</div><div class="s-sub">Progress by set</div></div>
+      <div class="card-chevron">›</div>
+    </div>
+    <div class="summary-tile" id="open-settings">
+      <div><div class="s-name">Settings</div><div class="s-sub">API key, export & import</div></div>
+      <div class="card-chevron">›</div>
+    </div>
+  </section>
+
+</main>
+
+<button class="fab" id="fab-scan" title="Scan a card">📷</button>
+
+<nav id="tab-bar">
+  <button class="tab-btn active" data-tab="home"><span class="tab-icon">🏠</span>Home</button>
+  <button class="tab-btn" data-tab="collection"><span class="tab-icon">🗂️</span>Collection</button>
+  <button class="tab-btn" data-tab="discover"><span class="tab-icon">✨</span>Scout</button>
+  <button class="tab-btn" data-tab="wishlist"><span class="tab-icon">⭐</span>Wishlist</button>
+  <button class="tab-btn" data-tab="more"><span class="tab-icon">⋯</span>More</button>
+</nav>
+
+<!-- ============ CARD DETAIL / EDIT SHEET ============ -->
+<div class="sheet-backdrop" id="sheet-backdrop"></div>
+<div class="sheet" id="card-sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <h2 id="card-sheet-title">Card details</h2>
+    <button class="sheet-close" id="card-sheet-close">✕</button>
+  </div>
+
+  <div id="card-sheet-image-wrap"></div>
+
+  <div class="field">
+    <label>Player</label>
+    <input type="text" id="f-player" placeholder="e.g. Adam Wharton" />
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>Club</label>
+      <input type="text" id="f-club" value="Crystal Palace" />
+    </div>
+    <div class="field">
+      <label>Season</label>
+      <input type="text" id="f-season" placeholder="e.g. 2025-26" />
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>Manufacturer</label>
+      <select id="f-manufacturer">
+        <option value="">–</option>
+        <option>Topps</option>
+        <option>Panini</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Product / Set</label>
+      <input type="text" id="f-product" placeholder="e.g. Topps Chrome" />
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>Card type</label>
+      <input type="text" id="f-cardtype" placeholder="e.g. Trophy Lift, Base" />
+    </div>
+    <div class="field">
+      <label>Card number</label>
+      <input type="text" id="f-cardnumber" placeholder="e.g. #57" />
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>Variant / colour</label>
+      <input type="text" id="f-variant" placeholder="e.g. Gold parallel" />
+    </div>
+    <div class="field">
+      <label>Numbered</label>
+      <input type="text" id="f-numbered" placeholder="e.g. 07/25" />
+    </div>
+  </div>
+
+  <div class="toggle-row">
+    <span>Autograph</span>
+    <div class="switch" id="f-autograph"></div>
+  </div>
+  <div class="toggle-row">
+    <span>Relic / patch</span>
+    <div class="switch" id="f-relic"></div>
+  </div>
+
+  <div class="field" id="wishlist-only-fields" style="display:none">
+    <label>Priority</label>
+    <select id="f-priority">
+      <option>Low</option>
+      <option selected>Medium</option>
+      <option>High</option>
+    </select>
+  </div>
+  <div class="field-row" id="wishlist-price-row" style="display:none">
+    <div class="field">
+      <label>Target price (£)</label>
+      <input type="number" id="f-targetprice" placeholder="e.g. 50" />
+    </div>
+  </div>
+  <div class="field" id="collection-value-field">
+    <label>Estimated value (£)</label>
+    <input type="number" id="f-value" placeholder="e.g. 40" />
+  </div>
+
+  <div class="field">
+    <label>Notes</label>
+    <textarea id="f-notes" placeholder="Anything worth remembering about this card…"></textarea>
+  </div>
+
+  <button class="btn btn-secondary btn-block" id="btn-find-similar" style="display:none;margin-bottom:10px">🧬 Find Similar</button>
+
+  <div class="btn-row">
+    <button class="btn btn-danger" id="btn-delete-card" style="display:none">Delete</button>
+    <button class="btn btn-primary btn-block" id="btn-save-card">Save</button>
+  </div>
+</div>
+
+<!-- ============ FIND SIMILAR SHEET ============ -->
+<div class="sheet-backdrop" id="find-similar-backdrop"></div>
+<div class="sheet" id="find-similar-sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <h2>Find Similar</h2>
+    <button class="sheet-close" id="find-similar-close">✕</button>
+  </div>
+  <div id="find-similar-source"></div>
+  <div class="note-box">
+    This is a preview of how Find Similar will work — the matching engine isn't built yet, so each tier below is currently empty. Results will get progressively less similar as you go down the list.
+  </div>
+  <div id="find-similar-tiers"></div>
+</div>
+
+<!-- ============ SETTINGS SHEET ============ -->
+<div class="sheet-backdrop" id="settings-backdrop"></div>
+<div class="sheet" id="settings-sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <h2>Settings</h2>
+    <button class="sheet-close" id="settings-close">✕</button>
+  </div>
+
+  <div class="note-box">
+    Card recognition uses your own Anthropic API key, sent directly from this browser to Anthropic. It's stored only on this device. Don't use this on a shared or public computer, and never share this installed app with your key already in it.
+  </div>
+
+  <div class="field">
+    <label>Anthropic API key</label>
+    <input type="password" id="f-apikey" placeholder="sk-ant-…" />
+  </div>
+  <button class="btn btn-secondary btn-block" id="btn-save-key">Save key</button>
+
+  <div class="section-title" style="margin-top:26px">eBay search</div>
+  <div class="note-box">
+    Live eBay results need a free eBay developer app. Sign up at developer.ebay.com, create a "Browse API" keyset, and paste the Client ID and Client Secret below. Same personal-device caveat as the Anthropic key above.
+  </div>
+  <div class="field">
+    <label>eBay Client ID</label>
+    <input type="text" id="f-ebay-clientid" placeholder="e.g. YourApp-PROD-xxxx" />
+  </div>
+  <div class="field">
+    <label>eBay Client Secret</label>
+    <input type="password" id="f-ebay-clientsecret" placeholder="PROD-xxxxxxxx" />
+  </div>
+  <button class="btn btn-secondary btn-block" id="btn-save-ebay">Save eBay credentials</button>
+
+  <div class="section-title" style="margin-top:26px">Data</div>
+  <button class="btn btn-secondary btn-block" id="btn-export" style="margin-bottom:10px">Export collection (JSON)</button>
+  <label class="btn btn-secondary btn-block" style="margin-bottom:10px;display:block;text-align:center">
+    Import collection (JSON)
+    <input type="file" id="import-file-input" accept="application/json" style="display:none" />
+  </label>
+  <div id="settings-msg" style="font-size:12.5px;color:var(--text-dim);margin-top:6px"></div>
+</div>
+
+<script src="js/db.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/ebay.js"></script>
+<script src="js/scout-brain.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
