@@ -26,7 +26,7 @@ let state = {
   collectionSearch: "",
   wishlistFilter: "all"
 };
-alert("PALACE APP JS LOADED");
+aler;
 
 // ---------------- Tab routing ----------------
 
@@ -837,67 +837,79 @@ function wireResultButtons(container, results) {
 }
 
 // ---------------- Settings ----------------
+ ----
 
 const settingsSheet = document.getElementById("settings-sheet");
 const settingsBackdrop = document.getElementById("settings-backdrop");
 
 async function openSettings() {
   const key = await DB.getSetting("anthropicApiKey");
-  const ebayId = await DB.getSetting("ebayClientId");
-  const ebaySecret = await DB.getSetting("ebayClientSecret");
+
   document.getElementById("f-apikey").value = key || "";
-  document.getElementById("f-ebay-clientid").value = ebayId || "";
-  document.getElementById("f-ebay-clientsecret").value = ebaySecret || "";
   document.getElementById("settings-msg").textContent = "";
+
   settingsSheet.classList.add("active");
   settingsBackdrop.classList.add("active");
 }
+
 function closeSettings() {
   settingsSheet.classList.remove("active");
   settingsBackdrop.classList.remove("active");
 }
+
 document.getElementById("settings-close").addEventListener("click", closeSettings);
 settingsBackdrop.addEventListener("click", closeSettings);
 
 document.getElementById("btn-save-key").addEventListener("click", async () => {
   const val = document.getElementById("f-apikey").value.trim();
-  await DB.setSetting("anthropicApiKey", val);
-  document.getElementById("settings-msg").textContent = "Saved.";
-});
 
-document.getElementById("btn-save-ebay").addEventListener("click", async () => {
-  const id = document.getElementById("f-ebay-clientid").value.trim();
-  const secret = document.getElementById("f-ebay-clientsecret").value.trim();
-  await DB.setSetting("ebayClientId", id);
-  await DB.setSetting("ebayClientSecret", secret);
-  await DB.setSetting("ebayToken", "");
-  await DB.setSetting("ebayTokenExpiry", "0");
-  document.getElementById("settings-msg").textContent = "eBay credentials saved.";
+  await DB.setSetting("anthropicApiKey", val);
+
+  document.getElementById("settings-msg").textContent = "Saved.";
 });
 
 document.getElementById("btn-export").addEventListener("click", async () => {
   const data = await DB.exportAll();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: "application/json" }
+  );
+
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
+
   a.href = url;
   a.download = `palace-cards-export-${new Date().toISOString().slice(0, 10)}.json`;
+
   a.click();
+
   URL.revokeObjectURL(url);
 });
 
 document.getElementById("import-file-input").addEventListener("change", async (e) => {
   const file = e.target.files[0];
+
   if (!file) return;
+
   try {
     const text = await file.text();
     const data = JSON.parse(text);
+
     await DB.importAll(data);
-    document.getElementById("settings-msg").textContent = `Imported ${data.cards?.length || 0} cards.`;
+
+    document.getElementById("settings-msg").textContent =
+      `Imported ${data.cards?.length || 0} cards.`;
+
     refreshCurrentTab();
+
   } catch (err) {
-    document.getElementById("settings-msg").textContent = "Import failed: " + err.message;
+
+    document.getElementById("settings-msg").textContent =
+      "Import failed: " + err.message;
+
   }
+
   e.target.value = "";
 });
 
