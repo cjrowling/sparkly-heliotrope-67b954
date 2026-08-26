@@ -1,4 +1,4 @@
-const CACHE = "palace-cards-v4";
+const CACHE = "palace-cards-v5";
 const ASSETS = [
   "./",
   "./index.html",
