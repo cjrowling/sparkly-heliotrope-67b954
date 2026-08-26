@@ -26,7 +26,7 @@ let state = {
   collectionSearch: "",
   wishlistFilter: "all"
 };
-aler;
+
 
 // ---------------- Tab routing ----------------
 
@@ -838,6 +838,7 @@ function wireResultButtons(container, results) {
 
 // ---------------- Settings ----------------
  ----
+   // ---------------- Settings ----------------
 
 const settingsSheet = document.getElementById("settings-sheet");
 const settingsBackdrop = document.getElementById("settings-backdrop");
@@ -881,7 +882,6 @@ document.getElementById("btn-export").addEventListener("click", async () => {
 
   a.href = url;
   a.download = `palace-cards-export-${new Date().toISOString().slice(0, 10)}.json`;
-
   a.click();
 
   URL.revokeObjectURL(url);
@@ -904,15 +904,12 @@ document.getElementById("import-file-input").addEventListener("change", async (e
     refreshCurrentTab();
 
   } catch (err) {
-
     document.getElementById("settings-msg").textContent =
       "Import failed: " + err.message;
-
   }
 
   e.target.value = "";
 });
-
 // ---------------- Init ----------------
 
 renderHome();
