@@ -26,6 +26,7 @@ let state = {
   collectionSearch: "",
   wishlistFilter: "all"
 };
+alert("PALACE APP JS LOADED");
 
 // ---------------- Tab routing ----------------
 
