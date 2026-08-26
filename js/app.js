@@ -837,8 +837,6 @@ function wireResultButtons(container, results) {
 }
 
 // ---------------- Settings ----------------
- ----
-   // ---------------- Settings ----------------
 
 const settingsSheet = document.getElementById("settings-sheet");
 const settingsBackdrop = document.getElementById("settings-backdrop");
