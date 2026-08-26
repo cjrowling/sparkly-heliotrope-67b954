@@ -52,6 +52,7 @@ document.querySelectorAll("[data-tab]").forEach((el) => {
 
 document.getElementById("fab-scan").addEventListener("click", () => switchTab("discover"));
 document.getElementById("open-settings").addEventListener("click", openSettings);
+console.log("PALACE APP JS LOADED");
 
 function refreshCurrentTab() {
   if (state.tab === "home") renderHome();
