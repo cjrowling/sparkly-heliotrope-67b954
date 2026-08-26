@@ -841,14 +841,29 @@ function wireResultButtons(container, results) {
 const settingsSheet = document.getElementById("settings-sheet");
 const settingsBackdrop = document.getElementById("settings-backdrop");
 
-async function openSettings() {
-  const key = await DB.getSetting("anthropicApiKey");
-
-  document.getElementById("f-apikey").value = key || "";
-  document.getElementById("settings-msg").textContent = "";
-
+function openSettings() {
+  // Open the sheet FIRST.
+  // This means a database problem cannot prevent Settings appearing.
   settingsSheet.classList.add("active");
   settingsBackdrop.classList.add("active");
+
+  // Then load the saved API key.
+  loadSettingsData();
+}
+
+async function loadSettingsData() {
+  const keyInput = document.getElementById("f-apikey");
+  const message = document.getElementById("settings-msg");
+
+  try {
+    const key = await DB.getSetting("anthropicApiKey");
+    keyInput.value = key || "";
+    message.textContent = "";
+  } catch (err) {
+    console.error("Settings database error:", err);
+    keyInput.value = "";
+    message.textContent = "Could not load saved settings.";
+  }
 }
 
 function closeSettings() {
@@ -857,32 +872,44 @@ function closeSettings() {
 }
 
 document.getElementById("settings-close").addEventListener("click", closeSettings);
+
 settingsBackdrop.addEventListener("click", closeSettings);
 
 document.getElementById("btn-save-key").addEventListener("click", async () => {
   const val = document.getElementById("f-apikey").value.trim();
 
-  await DB.setSetting("anthropicApiKey", val);
-
-  document.getElementById("settings-msg").textContent = "Saved.";
+  try {
+    await DB.setSetting("anthropicApiKey", val);
+    document.getElementById("settings-msg").textContent = "Saved.";
+  } catch (err) {
+    console.error("Settings save error:", err);
+    document.getElementById("settings-msg").textContent =
+      "Couldn't save: " + err.message;
+  }
 });
 
 document.getElementById("btn-export").addEventListener("click", async () => {
-  const data = await DB.exportAll();
+  try {
+    const data = await DB.exportAll();
 
-  const blob = new Blob(
-    [JSON.stringify(data, null, 2)],
-    { type: "application/json" }
-  );
+    const blob = new Blob(
+      [JSON.stringify(data, null, 2)],
+      { type: "application/json" }
+    );
 
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
 
-  a.href = url;
-  a.download = `palace-cards-export-${new Date().toISOString().slice(0, 10)}.json`;
-  a.click();
+    a.href = url;
+    a.download = `palace-cards-export-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
 
-  URL.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error("Export error:", err);
+    document.getElementById("settings-msg").textContent =
+      "Export failed: " + err.message;
+  }
 });
 
 document.getElementById("import-file-input").addEventListener("change", async (e) => {
