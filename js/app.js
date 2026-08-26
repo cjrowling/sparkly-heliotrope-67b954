@@ -52,7 +52,10 @@ document.querySelectorAll("[data-tab]").forEach((el) => {
 });
 
 document.getElementById("fab-scan").addEventListener("click", () => switchTab("discover"));
-document.getElementById("open-settings").addEventListener("click", openSettings);
+document.getElementById("open-settings").addEventListener("click", () => {
+  alert("SETTINGS CLICK IS WORKING");
+  openSettings();
+});
 
 function refreshCurrentTab() {
   if (state.tab === "home") renderHome();
