@@ -1,42 +1,44 @@
-// ebay.js — calls our own Netlify serverless function (netlify/functions/ebay-search.js),
-// which does the real eBay OAuth + Browse API request server-side using EBAY_CLIENT_ID /
-// EBAY_CLIENT_SECRET from Netlify's environment. Those credentials never reach this file
-// or the browser — this is the only thing the client ever calls.
-//
-// Vinted and Depop have no public search API, so those stay as pre-filled search links
-// you tap through to rather than pretending to search them.
+// ebay.js — frontend client for the Netlify eBay search function.
+// eBay Client ID and Secret stay safely in Netlify environment variables.
 
 const Ebay = {
-  async search(query, { limit = 25, sort = "newlyListed" } = {}) {
-    const url = `/.netlify/functions/ebay-search?q=${encodeURIComponent(query)}&sort=${encodeURIComponent(sort)}&limit=${limit}`;
 
-    let res;
-    try {
-      res = await fetch(url);
-    } catch (err) {
-      throw new Error("Couldn't reach the search service. Check your connection and try again.");
+  async search(query, { limit = 25, sort = "newlyListed" } = {}) {
+    query = (query || "").trim();
+
+    if (!query) {
+      throw new Error("Enter something to search for.");
     }
 
-    let data;
+    const params = new URLSearchParams({
+      q: query,
+      limit: String(limit),
+      sort
+    });
+
+    const res = await fetch(`/.netlify/functions/ebay-search?${params.toString()}`);
+
+    let data = {};
     try {
       data = await res.json();
-    } catch (err) {
-      throw new Error(`Search failed (${res.status}). The server didn't return a valid response.`);
+    } catch {
+      throw new Error(`eBay search returned an invalid response (${res.status}).`);
     }
 
     if (!res.ok) {
-      throw new Error(data.error || `Search failed (${res.status}).`);
+      throw new Error(data.error || `eBay search failed (${res.status}).`);
     }
 
     return (data.results || []).map((item) => ({
       id: item.id,
       title: item.title,
-      price: item.price,
-      currency: item.currency,
-      imageUrl: item.imageUrl,
-      itemWebUrl: item.itemWebUrl,
-      condition: item.condition,
-      seller: item.seller,
+      price: item.price && item.currency
+        ? `${item.currency} ${item.price}`
+        : item.price || null,
+      imageUrl: item.imageUrl || null,
+      itemWebUrl: item.itemWebUrl || null,
+      condition: item.condition || null,
+      seller: item.seller || null,
       buyingOptions: item.buyingOptions || []
     }));
   },
