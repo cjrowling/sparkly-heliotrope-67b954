@@ -697,3 +697,489 @@ main {
   height: 100%;
   background: linear-gradient(90deg, var(--blue-bright), var(--red-bright));
 }
+
+
+
+
+/* =========================================================
+   SCOUT REDESIGN
+   Cleaner, calmer, search-first Scout experience
+   ========================================================= */
+
+/* ---------- Scout intro ---------- */
+
+.scout-intro {
+  padding: 8px 2px 18px;
+}
+
+.scout-kicker {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  margin-bottom: 7px;
+}
+
+.scout-intro h2 {
+  font-size: 23px;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+}
+
+.scout-intro p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.55;
+  max-width: 520px;
+}
+
+
+/* ---------- Main Scout search ---------- */
+
+.scout-search-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(196, 18, 47, 0.12),
+      rgba(27, 69, 143, 0.12)
+    ),
+    var(--card-bg);
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 18px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.scout-search-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 9px;
+}
+
+.scout-main-search {
+  margin-bottom: 9px;
+  background: rgba(11, 18, 32, 0.72);
+}
+
+.scout-main-search input {
+  min-width: 0;
+}
+
+.scout-search-button {
+  min-height: 46px;
+  font-size: 14px;
+}
+
+.scout-save-button {
+  margin-top: 8px;
+  min-height: 42px;
+}
+
+
+/* ---------- Quick Scout actions ---------- */
+
+.scout-quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-bottom: 15px;
+}
+
+.scout-quick-action {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-align: left;
+
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  padding: 12px 10px;
+  color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.scout-quick-action:active {
+  transform: scale(0.985);
+}
+
+.quick-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: var(--bg-elevated);
+  font-size: 17px;
+}
+
+.scout-quick-action span:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+
+.scout-quick-action strong {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.2;
+}
+
+.scout-quick-action small {
+  display: block;
+  color: var(--text-dim);
+  font-size: 10.5px;
+  line-height: 1.3;
+  margin-top: 3px;
+}
+
+.quick-arrow {
+  color: var(--text-faint);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+
+/* ---------- Collapsible Scout sections ---------- */
+
+.scout-section {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.scout-section summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 58px;
+  padding: 11px 13px;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.scout-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.scout-section summary:active {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.scout-section-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--bg-elevated);
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.scout-section-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.scout-section-copy strong {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.25;
+}
+
+.scout-section-copy small {
+  display: block;
+  color: var(--text-dim);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.scout-section-chevron {
+  color: var(--text-faint);
+  font-size: 20px;
+  transition: transform 0.18s ease;
+}
+
+.scout-section[open] .scout-section-chevron {
+  transform: rotate(90deg);
+}
+
+.scout-section-content {
+  border-top: 1px solid var(--border);
+  padding: 4px 13px 13px;
+}
+
+
+/* ---------- Source rows ---------- */
+
+.source-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.source-row:last-child {
+  border-bottom: none;
+}
+
+.source-icon {
+  width: 30px;
+  text-align: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.source-row > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.source-row strong {
+  display: block;
+  font-size: 13px;
+}
+
+.source-row small {
+  display: block;
+  color: var(--text-dim);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.source-link {
+  font-size: 11px;
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+
+/* ---------- Scout Brain ---------- */
+
+.scout-brain-section {
+  margin-bottom: 16px;
+}
+
+.brain-intro {
+  padding: 10px 0 5px;
+}
+
+.brain-intro strong {
+  display: block;
+  font-size: 13px;
+}
+
+.brain-intro p {
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 5px 0 0;
+}
+
+.brain-example {
+  display: flex;
+  gap: 9px;
+
+  background: rgba(212, 175, 55, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 11px;
+
+  padding: 11px;
+  margin: 10px 0 12px;
+}
+
+.brain-example-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.brain-example strong {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gold-bright);
+}
+
+.brain-example p {
+  margin: 4px 0 0;
+  color: var(--text-dim);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.brain-tiers {
+  display: flex;
+  flex-direction: column;
+}
+
+.brain-tier {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.brain-tier:last-child {
+  border-bottom: none;
+}
+
+.brain-tier > span {
+  width: 27px;
+  height: 27px;
+
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--bg-elevated);
+  color: var(--text-faint);
+
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 10px;
+  font-weight: 800;
+
+  flex-shrink: 0;
+}
+
+.brain-tier div {
+  min-width: 0;
+}
+
+.brain-tier strong {
+  display: block;
+  font-size: 12px;
+}
+
+.brain-tier small {
+  display: block;
+  color: var(--text-dim);
+  font-size: 10.5px;
+  margin-top: 2px;
+}
+
+
+/* ---------- Scan mode ---------- */
+
+.scan-mode-header {
+  margin-bottom: 14px;
+}
+
+.scan-mode-header .btn {
+  font-size: 12px;
+  padding: 9px 13px;
+}
+
+#discover-scan-mode .scan-drop {
+  background: var(--card-bg);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+#discover-scan-mode .field {
+  margin-top: 4px;
+}
+
+
+/* ---------- Search result polish ---------- */
+
+#search-results {
+  margin-top: 4px;
+}
+
+#search-results .card-tile {
+  margin-bottom: 9px;
+}
+
+#search-results .badge-row {
+  gap: 5px;
+}
+
+#search-results .badge {
+  font-size: 9.5px;
+  padding: 4px 7px;
+}
+
+
+/* ---------- Marketplace links ---------- */
+
+#search-other-links {
+  margin-top: 11px;
+  margin-bottom: 3px;
+}
+
+#search-other-links .btn-row {
+  gap: 7px;
+}
+
+#search-other-links .btn {
+  font-size: 11px;
+  padding: 9px 7px;
+}
+
+
+/* ---------- Mobile refinement ---------- */
+
+@media (max-width: 380px) {
+
+  .scout-intro h2 {
+    font-size: 21px;
+  }
+
+  .scout-quick-actions {
+    gap: 7px;
+  }
+
+  .scout-quick-action {
+    padding: 11px 8px;
+  }
+
+  .scout-quick-action strong {
+    font-size: 11.5px;
+  }
+
+  .scout-quick-action small {
+    font-size: 10px;
+  }
+
+}
+
+
+/* ---------- Hide old Scout-only layout elements ---------- */
+
+#screen-discover > .section-title {
+  /* The redesigned Scout page no longer uses the old
+     giant section-heading blocks. */
+}
